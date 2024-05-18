@@ -9,14 +9,14 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, Flatten, Dense
 
-# Load the CSV data into a pandas DataFrame
+# Load Pandas to read csv
 data = pd.read_csv('Ransomware_headers.csv')
 
 # Preprocessing
 X = data.iloc[:, 4:].values  # Selecting numerical features as input
 y = data['GR'].values  # Selecting the target class
 
-# Split the data into training and testing sets
+# Spliting the data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Feature scaling
@@ -24,7 +24,7 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# Reshape the input data for CNN (assuming input shape is (1024, 1))
+# Reshape the input data for CNN 
 X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 
@@ -66,7 +66,7 @@ print(f'Training time: {training_time} seconds')
 loss, accuracy = model.evaluate(X_test, y_test)
 print(f'Test accuracy: {accuracy}')
 
-# Make predictions on the test data
+# test the data
 y_pred = model.predict(X_test)
 y_pred_binary = (y_pred > 0.5).astype(int)  # Convert probabilities to binary predictions
 
